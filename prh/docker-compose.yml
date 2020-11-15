@@ -1,0 +1,18 @@
+version: '2.1'
+volumes:
+  homebridge-config: {}
+services:
+  homebridge:
+    image: 'oznu/homebridge:raspberry-pi'
+    network_mode: host
+    expose:
+      - '8080'
+    ports:
+      - '8080:8080'
+    volumes:
+      - 'homebridge-config:/homebridge'
+    environment:
+      PGID: '1000'
+      PUID: '1000'
+      HOMEBRIDGE_CONFIG_UI: '1'
+      HOMEBRIDGE_CONFIG_UI_PORT: '8080'
