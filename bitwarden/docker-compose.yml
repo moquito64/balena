@@ -3,7 +3,7 @@ volumes:
   bitwarden-config: {}
 services:
   bitwarden:
-    image: bitwardenrs/server:latest
+    image: bitwardenrs/server:latest@sha256:77a08166afa041e55a9d5ef05d3cc3dfe1b1f67c77a056d9e4c8b73d0eca1768
     network_mode: host
     expose:
       - '80'
