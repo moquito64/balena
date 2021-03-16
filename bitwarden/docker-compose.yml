@@ -1,25 +1,19 @@
 version: '2.1'
 volumes:
   bitwarden-config: {}
-  nginx-config: {}
 services:
-  nginx-proxy:
-    container_name: nginx-proxy
-    image: nginx:mainline-alpine
-    restart: always
-    expose:
-     - '443'       
-    ports:
-     - 80:80
-     - 443:443
-    volumes:
-      - 'nginx-config:/etc/nginx/conf.d'
-      - 'nginx-config:/etc/ssl/private/'
   bitwarden:
     image: bitwardenrs/server:latest@sha256:77a08166afa041e55a9d5ef05d3cc3dfe1b1f67c77a056d9e4c8b73d0eca1768
+    expose:
+      - '443'
     network_mode: host
     ports:
-      - '80:80'
+      - '443:80'
     volumes:
       - 'bitwarden-config:/data'
+      - 'bitwarden-config:/ssl'
+    environment:
+      ROCKET_TLS: '{certs = "/ssl/cert.pem", key = "/ssl/key.pem"}'
+      LOG_FILE: '/data/bitwarden.log'
+      SIGNUPS_ALLOWED: 'true'
 
