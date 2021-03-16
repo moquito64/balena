@@ -1,0 +1,14 @@
+version: '2.1'
+volumes:
+  bitwarden-config: {}
+services:
+  bitwarden:
+    image: bitwardenrs/server:latest
+    network_mode: host
+    expose:
+      - '80'
+    ports:
+      - '80:80'
+    volumes:
+      - 'bitwarden-config:/data'
+
