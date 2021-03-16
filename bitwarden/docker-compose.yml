@@ -1,20 +1,28 @@
 version: '2.1'
 volumes:
   bitwarden-config: {}
+  caddy-config: {}
 services:
   bitwarden:
     image: bitwardenrs/server:latest@sha256:77a08166afa041e55a9d5ef05d3cc3dfe1b1f67c77a056d9e4c8b73d0eca1768
     expose:
-      - "443"
-      - "80"
-    network_mode: host
+      - 443
+      - 80
     ports:
-      - "443:80"
+      - 80:80
     volumes:
       - 'bitwarden-config:/data'
       - 'bitwarden-config:/ssl'
     environment:
-      ROCKET_TLS: '{certs = "/ssl/cert.pem", key = "/ssl/key.pem"}'
       LOG_FILE: '/data/bitwarden.log'
       SIGNUPS_ALLOWED: 'true'
+      WEBSOCKET_ENABLED: 'true'
+  caddy:
+    image:  caddy:builder-alpine@ha256:62667b3a24dd819b71004cb01749b845967c223df5ea625100b41ac3d05e2555
+    restart: always
+    volumes:
+     - 'Caddy-config:/etc/Caddyfile:ro'
+    ports:
+     - 80:80
+     - 443:443
 
