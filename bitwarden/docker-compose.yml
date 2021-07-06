@@ -5,8 +5,8 @@ volumes:
   caddy-data: {}
   caddyfile: {}        
 services:
-  bitwarden:
-    image: bitwardenrs/server:latest@sha256:77a08166afa041e55a9d5ef05d3cc3dfe1b1f67c77a056d9e4c8b73d0eca1768
+  vaultwarden:
+    image: vaultwarden/server:latest
     expose:
       - 80
       - 81  
@@ -20,7 +20,7 @@ services:
       WEBSOCKET_ENABLED: 'true'
       ADMIN_TOKEN: 'eCPhzd+mJ5P9B/n4RMDN1Y+hiJOioSEX9RQX78nebd8q2ED4nXFaXGQmXdU0iRo1'
   caddy:
-    image:  caddy:latest@sha256:35efa62036c16d5ac4716ce79b11c0505538236542b982ce31e580044712c961
+    image:  caddy:latest
     restart: always
     expose:
       - 80

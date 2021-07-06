@@ -1,0 +1,36 @@
+version: '2.1'
+volumes:
+  bitwarden-config: {}
+  caddy-config: {}
+  caddy-data: {}
+  caddyfile: {}        
+services:
+  vaultwarden:
+    image: vaultwarden/server:latest
+    expose:
+      - 80
+      - 81  
+    ports:
+      - 81:80
+    volumes:
+      - 'bitwarden-config:/data'
+    environment:
+      LOG_FILE: '/data/bitwarden.log'
+      SIGNUPS_ALLOWED: 'false'
+      WEBSOCKET_ENABLED: 'true'
+      ADMIN_TOKEN: 'eCPhzd+mJ5P9B/n4RMDN1Y+hiJOioSEX9RQX78nebd8q2ED4nXFaXGQmXdU0iRo1'
+  caddy:
+    image:  caddy:latest@sha256:35efa62036c16d5ac4716ce79b11c0505538236542b982ce31e580044712c961
+    restart: always
+    expose:
+      - 80
+      - 443
+    volumes:
+      - 'caddy-config:/config'
+      - 'caddy-data:/data' 
+      - 'caddyfile:/etc/caddy' 
+    ports:
+      - 80:80 
+      - 443:443     
+ 
+
